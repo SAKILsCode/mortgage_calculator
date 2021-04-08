@@ -6,33 +6,48 @@ public class MortgageCalculator {
         final byte TOTAL_MONTH = 12;
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Principal: ");
-        int principal = input.nextInt();
+        int principal;
+        float annualInterest;
+        float interestRate;
+        short years;
+        int period;
+        float mortgage;
+        float n;
 
-        while (principal < 0) {
-            System.out.println("Please enter a positive decimal number_ ");
+        while (true) {
+            System.out.print("Principal (1K - 1M): ");
             principal = input.nextInt();
-        }
-
-        System.out.print("Interest Rate: ");
-        float annualInterest = input.nextFloat();
-        while (annualInterest < 0) {
-            System.out.println("Please enter a valid Interest Rate_ ");
+            if(principal >= 1000 && principal <= 1000000)
+                break;
+            else
+             System.out.println("Please enter a number between 1000 and 1,000,000.");
+            }
+            
+        while (true) {
+            System.out.print("Interest Rate: ");
             annualInterest = input.nextFloat();
+            if(annualInterest >= 1 && annualInterest <= 30){
+                interestRate = annualInterest / PARCENTAGE / TOTAL_MONTH;
+                break;
+            }
+            else
+                System.out.println("Please enter a value greater than 0 and not more than 30.");
         }
 
-        float interestRate = annualInterest / PARCENTAGE / TOTAL_MONTH;
-        System.out.print("Period (Years): ");
-        short years = input.nextShort();
-        while (years < 0 || years > 30) {
-            System.out.println("Year must be positive decimal number and not more than 30 ");
+        while (true) {
+            System.out.print("Period (Years): ");
             years = input.nextShort();
+            if(years >= 1 && years <= 30){
+                period = years * TOTAL_MONTH;
+                break;
+            }
+            else
+                System.out.println("Year must be 1 to 30.");
         }
-        int period = years * TOTAL_MONTH;
 
-        float n = (float) Math.pow((1 + interestRate), period);
+        n = (float) Math.pow((1 + interestRate), period);
 
-        float mortgage = (principal * (interestRate * n)) / (n - 1);
+        mortgage = (principal * (interestRate * n)) / (n - 1);
         System.out.printf("Mortgage: %.2f", mortgage);
     }
 }
